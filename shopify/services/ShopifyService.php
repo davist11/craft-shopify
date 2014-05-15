@@ -27,7 +27,7 @@ class ShopifyService extends BaseApplicationComponent
 	 *
 	 * @return array Array of Shopify Products
 	 */
-	public function getProducts($options)
+	public function getProducts($options = array())
 	{
 		$query = http_build_query($options);
 		$url = $this->_getShopifyUrl('admin/products.json?' . $query);
@@ -55,7 +55,7 @@ class ShopifyService extends BaseApplicationComponent
 	 * @param array $options Array of options: id, fields
 	 * @return array Shopify Product
 	 */
-	public function getProductById($options)
+	public function getProductById($options = array())
 	{
 		$id = $options['id'];
 		$fields = isset($options['fields']) ? '?fields=' . $options['fields'] : '';
