@@ -1,0 +1,36 @@
+{% import '_includes/forms' as forms %}
+
+<p>In order to use this plugin, you must provide your Shopify API credentials. You can find these credentials in the <strong>Private Apps</strong> section in your Shopify Control Panel.</p>
+
+{{ forms.textField({
+	label: 'API Key'|t,
+	required: true,
+	name: 'apiKey',
+	value: settings.apiKey,
+	errors: settings.getErrors('apiKey')
+}) }}
+
+{{ forms.textField({
+	label: 'Password'|t,
+	required: true,
+	name: 'password',
+	value: settings.password,
+	errors: settings.getErrors('password')
+}) }}
+
+{{ forms.textField({
+	label: 'Secret'|t,
+	required: true,
+	name: 'secret',
+	value: settings.secret,
+	errors: settings.getErrors('secret')
+}) }}
+
+{{ forms.textField({
+	label: 'Hostname'|t,
+	required: true,
+	name: 'hostname',
+	value: settings.hostname,
+	placeholder: "hostname.myshopify.com",
+	errors: settings.getErrors('hostname')
+}) }}
