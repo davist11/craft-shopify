@@ -32,21 +32,7 @@ class ShopifyService extends BaseApplicationComponent
 		$query = http_build_query($options);
 		$url = $this->_getShopifyUrl('admin/products.json?' . $query);
 
-		try {
-			$client = new \Guzzle\Http\Client();
-			$request = $client->get($url);
-			$response = $request->send();
-
-			if (!$response->isSuccessful()) {
-				return;
-			}
-
-			$items = $response->json();
-
-			return $items['products'];
-		} catch(\Exception $e) {
-			return;
-		}
+		return $this->_getShopifyResponse($url, 'products');
 	}
 
 	/**
@@ -61,21 +47,7 @@ class ShopifyService extends BaseApplicationComponent
 		$fields = isset($options['fields']) ? '?fields=' . $options['fields'] : '';
 		$url = $this->_getShopifyUrl('admin/products/' . $id . '.json' . $fields);
 
-		try {
-			$client = new \Guzzle\Http\Client();
-			$request = $client->get($url);
-			$response = $request->send();
-
-			if (!$response->isSuccessful()) {
-				return;
-			}
-
-			$items = $response->json();
-
-			return $items['product'];
-		} catch(\Exception $e) {
-			return;
-		}
+		return $this->_getShopifyResponse($url, 'product');
 	}
 
 	/**
@@ -87,5 +59,32 @@ class ShopifyService extends BaseApplicationComponent
 	private function _getShopifyUrl($endpoint)
 	{
 		return 'https://' . $this->apiKey . ':' . $this->password . '@' . $this->hostname . '/' . $endpoint;
+	}
+
+
+	/**
+	 * Get response from Shopify API endpoint
+	 *
+	 * @param string $url URL to request from Shopify
+	 * @param string $key Key to pluck from json response
+	 * @return array Shopify response at $key index
+	 */
+	priate function _getShopifyResponse($url, $key)
+	{
+		try {
+			$client = new \Guzzle\Http\Client();
+			$request = $client->get($url);
+			$response = $request->send();
+
+			if (!$response->isSuccessful()) {
+				return;
+			}
+
+			$items = $response->json();
+
+			return $items[$key];
+		} catch(\Exception $e) {
+			return;
+		}
 	}
 }
