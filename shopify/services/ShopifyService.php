@@ -79,6 +79,33 @@ class ShopifyService extends BaseApplicationComponent
 	}
 
 	/**
+	 * Get collections from Shopify
+	 *
+	 * @return array Array of Shopify Collections
+	 */
+	public function getCustomCollections($options = array())
+	{
+		$query = http_build_query($options);
+		$url = $this->_getShopifyUrl('admin/custom_collections.json?' . $query);
+
+		try {
+			$client = new \Guzzle\Http\Client();
+			$request = $client->get($url);
+			$response = $request->send();
+
+			if (!$response->isSuccessful()) {
+				return;
+			}
+
+			$items = $response->json();
+
+			return $items['custom_collections'];
+		} catch(\Exception $e) {
+			return;
+		}
+	}
+
+	/**
 	 * Get specific product from Shopify
 	 *
 	 * @param string $endpoint API endpoint
