@@ -16,13 +16,15 @@ class Shopify_ProductFieldType extends BaseFieldType
 	 */
 	public function getInputHtml($name, $value)
 	{
-		$products = craft()->shopify->getProducts();
+		$productOptions = array('limit' => 250);
+		$products = craft()->shopify->getProducts($productOptions);
 
+		$options = array();
 		foreach ($products as $product) {
 			$options[] = array(
-							'label' => $product['title'],
-							'value' => $product['id']
-						);
+				'label' => $product['title'],
+				'value' => $product['id']
+			);
 		}
 
 		return craft()->templates->render('shopify/_select', array(
