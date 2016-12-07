@@ -3,24 +3,39 @@ namespace Craft;
 
 class ShopifyPlugin extends BasePlugin
 {
-	function getName()
+	public function getName()
 	{
 		 return Craft::t('Shopify');
 	}
 
-	function getVersion()
+	public function getDescription()
+	{
+		return 'Integrate with the Shopify API.';
+	}
+
+	public function getVersion()
 	{
 		return '1.0.1';
 	}
 
-	function getDeveloper()
+	public function getSchemaVersion()
+	{
+		return '1.0.0';
+	}
+
+	public function getDeveloper()
 	{
 		return 'Trevor Davis';
 	}
 
-	function getDeveloperUrl()
+	public function getDeveloperUrl()
 	{
 		return 'http://trevordavis.net';
+	}
+
+	public function getDocumentationUrl()
+	{
+		return 'https://github.com/davist11/craft-shopify';
 	}
 
 	protected function defineSettings()
