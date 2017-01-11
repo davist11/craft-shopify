@@ -12,7 +12,7 @@ Craft plugin to integrate with the Shopify API
 
 ### craft.shopify.getProducts
 
-Retrieve all products from Shopify. You can pass in any parameters that are noted in the [products enpoint](http://docs.shopify.com/api/product#index). Example:
+Retrieve all products from Shopify. You can pass in any parameters that are noted in the [products endpoint](http://docs.shopify.com/api/product#index). Example:
 
 ```
 {% for product in craft.shopify.getProducts({ fields: 'title,variants', limit: 5 }) %}
@@ -38,9 +38,9 @@ This is just a slightly modified version of the getProducts method where the arr
 	<div class="product">
 		<h2><a href="{{ entry.url }}">{{ entry.title }}</a></h2>
 
-		{% if entry.shopifyProduct and shopifyProducts[entry.shopifyProduct] %}
+		{% if entry.shopifyProduct and shopifyProducts[entry.shopifyProduct.productId] %}
 			<ul>
-				{% for variant in shopifyProducts[entry.shopifyProduct] %}
+				{% for variant in shopifyProducts[entry.shopifyProduct.productId] %}
 					<li>{{ variant.title }} - ${{ variant.price }}</li>
 				{% endfor %}
 			</ul>
@@ -66,3 +66,22 @@ Useful on product show pages to access Shopify product information. Useful to ge
 	<button type="submit">Add to Cart</button>
 </form>
 ```
+
+---
+
+### Minor breaking change (v1.0.3)
+
+Your `entry.shopifyProduct` value is now a _model_ (whereas it was previously a simple integer).
+
+If your `entry.shopifyProduct` is being directly output as an ID string, no change is necessary.
+
+    {# No change #}
+    {{ entry.shopifyProduct }}
+
+If your `entry.shopifyProduct` is being used in a _comparison operation_, then you'll need to append `.productId` to it.
+
+    {# Previous comparison #}
+    {% if entry.shopifyProduct == 101 %}
+    
+    {# New comparison #}
+    {% if entry.shopifyProduct.productId == 101 %}

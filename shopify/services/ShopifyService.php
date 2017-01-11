@@ -57,8 +57,8 @@ class ShopifyService extends BaseApplicationComponent
 	 */
 	public function getProductById($options = array())
 	{
-		$id = $options['id'];
-		$fields = isset($options['fields']) ? '?fields=' . $options['fields'] : '';
+		$id = (string) $options['id'];
+		$fields = isset($options['fields']) && $options['fields'] ? '?fields=' . $options['fields'] : '';
 		$url = $this->_getShopifyUrl('admin/products/' . $id . '.json' . $fields);
 
 		try {
@@ -88,4 +88,19 @@ class ShopifyService extends BaseApplicationComponent
 	{
 		return 'https://' . $this->apiKey . ':' . $this->password . '@' . $this->hostname . '/' . $endpoint;
 	}
+
+	/**
+	 * Retrieves product model
+	 *
+	 * @param Shopify_ProductFieldType $field
+	 * @param mixed $value
+	 * @return Shopify_ProductModel
+	 */
+	public function getProductModel(Shopify_ProductFieldType $field, $value)
+	{
+		$model = new Shopify_ProductModel;
+		$model->productId = $value;
+		return $model;
+	}
+
 }
