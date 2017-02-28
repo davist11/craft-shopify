@@ -12,7 +12,7 @@ Craft plugin to integrate with the Shopify API
 
 ### craft.shopify.getProducts
 
-Retrieve all products from Shopify. You can pass in any parameters that are noted in the [products enpoint](http://docs.shopify.com/api/product#index). Example:
+Retrieve all products from Shopify. You can pass in any parameters that are noted in the [products endpoint](http://docs.shopify.com/api/product#index). Example:
 
 ```
 {% for product in craft.shopify.getProducts({ fields: 'title,variants', limit: 5 }) %}
