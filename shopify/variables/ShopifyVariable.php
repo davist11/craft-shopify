@@ -26,4 +26,9 @@ class ShopifyVariable
 
 		return $product_prices;
 	}
+
+	public function getCustomCollections($options = array())
+	{
+		return craft()->shopify->getCustomCollections($options);
+	}
 }
