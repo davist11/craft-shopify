@@ -33,4 +33,15 @@ class Shopify_ProductFieldType extends BaseFieldType
 			'options' => $options
 		));
 	}
+
+	/**
+	 * As the data leaves the database
+	 *
+	 * @param string $value ID of Shopify product
+	 * @return Shopify_ProductModel
+	 */
+	public function prepValue($value)
+	{
+		return craft()->shopify->getProductModel($this, $value);
+	}
 }

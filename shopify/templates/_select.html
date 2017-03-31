@@ -2,7 +2,8 @@
 	<select name="{{ name }}" id="{{ name }}">
 		<option value=""></option>
 		{% for option in options %}
-			<option value="{{ option.value }}"{% if value == option.value %} selected{% endif %}>{{ option.label }}</option>
+			{% set selected = (value and (value.productId == option.value) ? 'selected' : '') %}
+			<option value="{{ option.value }}" {{ selected }}>{{ option.label }}</option>
 		{% endfor %}
 	</select>
 </div>
