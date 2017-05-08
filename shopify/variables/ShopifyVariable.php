@@ -26,4 +26,16 @@ class ShopifyVariable
 
 		return $product_prices;
 	}
+	public function getProductsImages($options = array())
+	{
+		$products = craft()->shopify->getProducts($options);
+
+		foreach ($products as $product) {
+			$id = $product['id'];
+			$images = $product['images'];
+			$product_images[$id]  = $images;
+		}
+
+		return $product_images;
+	}	
 }
