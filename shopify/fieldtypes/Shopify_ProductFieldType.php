@@ -16,8 +16,22 @@ class Shopify_ProductFieldType extends BaseFieldType
 	 */
 	public function getInputHtml($name, $value)
 	{
-		$productOptions = array('limit' => 250);
-		$products = craft()->shopify->getProducts($productOptions);
+	    $limit = 250;
+	    $page = 1;
+	    $fields = 'id,title';
+
+		$productOptions = array('limit' => $limit, 'page' => $page, 'fields' => $fields);
+		$getProducts = craft()->shopify->getProducts($productOptions);
+		$products = $getProducts;
+
+        if (count($getProducts) == $limit) {
+            while (count($getProducts) > 0) {
+                $page++;
+                $productOptions = array('limit' => $limit, 'page' => $page, 'fields' => $fields);
+                $getProducts = craft()->shopify->getProducts($productOptions);
+                $products = array_merge($products, $getProducts);
+            }
+        }
 
 		$options = array();
 		foreach ($products as $product) {
